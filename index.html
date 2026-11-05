@@ -2,160 +2,807 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 Collection</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS2 Collection</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        body {
-            background: #101114;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
+<style>
+:root {
+    --bg: #090b10;
+    --panel: #10141d;
+    --panel2: #151b26;
+    --border: #252d3b;
+    --text: #f1f3f8;
+    --muted: #8993a5;
+    --orange: #ff8a24;
+}
 
-        header {
-            background: #191a20;
-            padding: 22px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #292a30;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff8c32;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        nav a {
-            color: #ccc;
-            text-decoration: none;
-            margin-left: 25px;
-        }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+}
 
-        nav a:hover {
-            color: #ff8c32;
-        }
+/* SIDEBAR */
 
-        .hero {
-            text-align: center;
-            padding: 110px 20px;
-        }
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 245px;
+    height: 100vh;
+    background: #0d1017;
+    border-right: 1px solid var(--border);
+    padding: 30px 20px;
+    z-index: 10;
+}
 
-        .hero h1 {
-            font-size: 52px;
-            margin-bottom: 20px;
-        }
+.logo {
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 55px;
+}
 
-        .hero span {
-            color: #ff8c32;
-        }
+.logo span {
+    color: var(--orange);
+}
 
-        .hero p {
-            color: #999;
-            font-size: 17px;
-        }
+.nav-label {
+    color: #657083;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 28px 12px 12px;
+}
 
-        .cases {
-            padding: 30px 8%;
-        }
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 12px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
 
-        .cases h2 {
-            margin-bottom: 25px;
-        }
+.nav-link:hover,
+.nav-link.active {
+    color: white;
+    background: #1a202c;
+}
 
-        .case-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
+.nav-link.active {
+    border-left: 3px solid var(--orange);
+}
 
-        .case {
-            background: #1b1c22;
-            border: 1px solid #303138;
-            border-radius: 12px;
-            padding: 35px 20px;
-            text-align: center;
-            transition: 0.2s;
-        }
+.sidebar-bottom {
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    right: 20px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel);
+}
 
-        .case:hover {
-            border-color: #ff8c32;
-            transform: translateY(-5px);
-        }
+.sidebar-bottom strong {
+    font-size: 12px;
+}
 
-        .case h3 {
-            margin-bottom: 10px;
-        }
+.sidebar-bottom p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 6px;
+}
 
-        .case p {
-            color: #999;
-        }
+/* MAIN */
 
-        footer {
-            text-align: center;
-            padding: 35px;
-            color: #666;
-            margin-top: 70px;
-        }
-    </style>
+.main {
+    margin-left: 245px;
+    padding: 35px 45px;
+    max-width: 1700px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 45px;
+}
+
+.breadcrumb {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, #ffb04a, #e65c16);
+}
+
+/* HERO */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 310px;
+    padding: 55px;
+    border: 1px solid #34313a;
+    border-radius: 14px;
+    background:
+        radial-gradient(ellipse at 80% 40%, #673b24 0%, transparent 45%),
+        linear-gradient(110deg, #191b22, #11131b 70%);
+    margin-bottom: 45px;
+}
+
+.hero::after {
+    content: "CS2";
+    position: absolute;
+    right: 35px;
+    top: 5px;
+    font-size: clamp(100px, 18vw, 230px);
+    font-weight: 900;
+    letter-spacing: -15px;
+    color: #ffffff08;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 550px;
+}
+
+.eyebrow {
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: clamp(35px, 5vw, 57px);
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -2px;
+}
+
+.hero h1 span {
+    color: var(--orange);
+}
+
+.hero p {
+    color: #a5adbb;
+    font-size: 13px;
+    line-height: 1.8;
+    margin: 18px 0 25px;
+}
+
+.hero-button {
+    display: inline-block;
+    background: var(--orange);
+    color: #17100a;
+    padding: 13px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 900;
+    transition: 0.2s;
+}
+
+.hero-button:hover {
+    background: #ffab52;
+    transform: translateY(-2px);
+}
+
+/* SECTION HEADERS */
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+/* COLLECTION CARDS */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.filter {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter:hover,
+.filter.selected {
+    background: #332315;
+    border-color: #a95e24;
+    color: #ffad60;
+}
+
+.search {
+    width: 220px;
+    max-width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 11px 13px;
+    border-radius: 6px;
+    outline: none;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.search:focus {
+    border-color: var(--orange);
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.collection-card {
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: 0.25s;
+}
+
+.collection-card:hover {
+    transform: translateY(-5px);
+    border-color: #8b592f;
+}
+
+.card-art {
+    height: 165px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-art::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    border: 1px solid #ffffff18;
+}
+
+.card-art::after {
+    content: "";
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 1px solid #ffffff18;
+}
+
+.art-symbol {
+    position: relative;
+    z-index: 1;
+    font-size: 65px;
+    font-weight: 900;
+    color: #ffffffd9;
+    text-shadow: 0 8px 30px #0008;
+    transform: rotate(-12deg);
+}
+
+.onyx { background: radial-gradient(circle, #454653, #171820 70%); }
+.ruby { background: radial-gradient(circle, #a82e42, #281019 75%); }
+.sapphire { background: radial-gradient(circle, #2869bd, #101c38 75%); }
+.ak { background: radial-gradient(circle, #8b5630, #251b16 75%); }
+.awp { background: radial-gradient(circle, #376d8a, #111b28 75%); }
+.glove { background: radial-gradient(circle, #80622e, #211b13 75%); }
+.neon { background: radial-gradient(circle, #7545a5, #1b1230 75%); }
+.dragon { background: radial-gradient(circle, #a44726, #29140e 75%); }
+.arctic { background: radial-gradient(circle, #7799ae, #18252d 75%); }
+
+.card-info {
+    padding: 17px;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-info h3 {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.category {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--orange);
+    background: #ff8a2415;
+    padding: 6px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.card-info p {
+    color: var(--muted);
+    font-size: 11px;
+    margin: 12px 0 15px;
+    line-height: 1.6;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 13px;
+}
+
+.item-count {
+    color: #9da7b7;
+    font-size: 10px;
+}
+
+.view-link {
+    color: var(--orange);
+    font-size: 10px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+/* PROGRESS PANEL */
+
+.progress-panel {
+    margin-top: 45px;
+    padding: 25px;
+    background: linear-gradient(120deg, #171c27, #11141c);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.progress-top h3 {
+    font-size: 15px;
+}
+
+.progress-top span {
+    color: var(--orange);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.progress-track {
+    height: 7px;
+    background: #292f3b;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(90deg, #e65c16, #ffb04a);
+    border-radius: 10px;
+}
+
+.progress-note {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 12px;
+}
+
+/* FOOTER */
+
+footer {
+    border-top: 1px solid var(--border);
+    margin-top: 55px;
+    padding: 25px 0;
+    color: #687386;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+    .collection-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 18px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+        margin: 0 0 15px;
+    }
+
+    .nav-label,
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .nav-link {
+        display: inline-flex;
+        padding: 9px;
+        margin-right: 5px;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 22px 16px;
+    }
+
+    .topbar {
+        margin-bottom: 25px;
+    }
+
+    .hero {
+        padding: 30px 23px;
+        min-height: 280px;
+    }
+
+    .collection-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">CS2 COLLECTION</div>
+<aside class="sidebar">
+    <div class="logo">CS2<span>COLLECTION</span></div>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="#cases">Cases</a>
-            <a href="#collections">Collections</a>
-        </nav>
-    </header>
+    <div class="nav-label">MAIN MENU</div>
+    <a class="nav-link active" href="#home">⌂ &nbsp; Home</a>
+    <a class="nav-link" href="#collections">▦ &nbsp; Collections</a>
+    <a class="nav-link" href="#progress">◈ &nbsp; My Progress</a>
+
+    <div class="nav-label">DISCOVER</div>
+    <a class="nav-link" href="#collections">⚔ &nbsp; Weapon Collections</a>
+    <a class="nav-link" href="#collections">✦ &nbsp; Knife Collections</a>
+
+    <div class="sidebar-bottom">
+        <strong>COLLECTION STATUS</strong>
+        <p>Your collection starts here.</p>
+    </div>
+</aside>
+
+<main class="main" id="home">
+
+    <div class="topbar">
+        <div class="breadcrumb">COLLECTIONS / HOME</div>
+        <div class="profile">
+            <div class="avatar"></div>
+            DEMO USER
+        </div>
+    </div>
 
     <section class="hero">
-        <h1>YOUR <span>CS2</span> COLLECTION</h1>
-        <p>Discover iconic weapons, knives and legendary skins.</p>
+        <div class="hero-content">
+            <div class="eyebrow">THE ULTIMATE CS2 DATABASE</div>
+            <h1>BUILD YOUR<br><span>COLLECTION.</span></h1>
+            <p>
+                Discover unique CS2 weapon collections, explore skins
+                and create your own personal inventory.
+            </p>
+            <a href="#collections" class="hero-button">EXPLORE COLLECTIONS →</a>
+        </div>
     </section>
 
-    <section class="cases" id="cases">
-        <h2>Featured Collections</h2>
-
-        <div class="case-grid">
-
-            <div class="case">
-                <h3>Onyx Collection</h3>
-                <p>Black and luxurious knife finishes.</p>
+    <section id="collections">
+        <div class="section-heading">
+            <div>
+                <h2>Featured Collections</h2>
+                <p>Explore the collections available on the platform.</p>
             </div>
+            <input
+                class="search"
+                id="search"
+                type="search"
+                placeholder="Search collections..."
+                aria-label="Search collections"
+            >
+        </div>
 
-            <div class="case">
-                <h3>AK-47 Collection</h3>
-                <p>Iconic AK-47 weapon skins.</p>
-            </div>
+        <div class="filters">
+            <button class="filter selected" data-filter="all">ALL</button>
+            <button class="filter" data-filter="knife">KNIVES</button>
+            <button class="filter" data-filter="weapon">WEAPONS</button>
+            <button class="filter" data-filter="theme">THEMES</button>
+        </div>
 
-            <div class="case">
-                <h3>AWP Legends</h3>
-                <p>Famous AWP designs.</p>
-            </div>
+        <div class="collection-grid" id="collectionGrid">
 
-            <div class="case">
-                <h3>Ruby Collection</h3>
-                <p>Red-themed knife finishes.</p>
-            </div>
+            <article class="collection-card" data-category="knife">
+                <div class="card-art onyx"><span class="art-symbol">◆</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>Onyx Collection</h3>
+                        <span class="category">Knife</span>
+                    </div>
+                    <p>A collection inspired by dark and elegant knife finishes.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Knife Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="knife">
+                <div class="card-art ruby"><span class="art-symbol">♦</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>Ruby Collection</h3>
+                        <span class="category">Knife</span>
+                    </div>
+                    <p>Red finishes, deep colors and a bold visual style.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Knife Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="knife">
+                <div class="card-art sapphire"><span class="art-symbol">✦</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>Sapphire Collection</h3>
+                        <span class="category">Knife</span>
+                    </div>
+                    <p>Blue-inspired finishes with a clean premium look.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Knife Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="weapon">
+                <div class="card-art ak"><span class="art-symbol">AK</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>AK-47 Collection</h3>
+                        <span class="category">Weapon</span>
+                    </div>
+                    <p>A dedicated collection for one of CS2's most iconic rifles.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Rifle Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="weapon">
+                <div class="card-art awp"><span class="art-symbol">AWP</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>AWP Legends</h3>
+                        <span class="category">Weapon</span>
+                    </div>
+                    <p>A collection dedicated to legendary sniper rifle skins.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Sniper Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="knife">
+                <div class="card-art glove"><span class="art-symbol">✧</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>Glove Fever</h3>
+                        <span class="category">Gloves</span>
+                    </div>
+                    <p>Explore different glove designs and visual styles.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Glove Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="theme">
+                <div class="card-art neon"><span class="art-symbol">⚡</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>Neon Rush</h3>
+                        <span class="category">Theme</span>
+                    </div>
+                    <p>Bright neon colors and futuristic weapon designs.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Themed Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="theme">
+                <div class="card-art dragon"><span class="art-symbol">龍</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>Dragon Collection</h3>
+                        <span class="category">Theme</span>
+                    </div>
+                    <p>Dragon-inspired designs and powerful visual details.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Themed Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="collection-card" data-category="theme">
+                <div class="card-art arctic"><span class="art-symbol">❄</span></div>
+                <div class="card-info">
+                    <div class="card-top">
+                        <h3>Arctic Collection</h3>
+                        <span class="category">Theme</span>
+                    </div>
+                    <p>Ice, snow and silver-inspired weapon designs.</p>
+                    <div class="card-footer">
+                        <span class="item-count">Themed Collection</span>
+                        <a class="view-link" href="#progress">EXPLORE →</a>
+                    </div>
+                </div>
+            </article>
 
         </div>
     </section>
 
+    <section class="progress-panel" id="progress">
+        <div class="progress-top">
+            <h3>Your Collection Progress</h3>
+            <span>35% COMPLETE</span>
+        </div>
+        <div class="progress-track">
+            <div class="progress-fill"></div>
+        </div>
+        <p class="progress-note">
+            Demo progress — your real collection will be connected later.
+        </p>
+    </section>
+
     <footer>
-        CS2 Collection © 2026
+        <span>© 2026 CS2 COLLECTION</span>
+        <span>COMMUNITY COLLECTION PROJECT · NOT AFFILIATED WITH VALVE</span>
     </footer>
+
+</main>
+
+<script>
+const filters = document.querySelectorAll(".filter");
+const cards = document.querySelectorAll(".collection-card");
+const search = document.getElementById("search");
+
+let activeFilter = "all";
+
+function updateCollections() {
+    const searchText = search.value.toLowerCase();
+
+    cards.forEach(card => {
+        const category = card.dataset.category;
+        const name = card.querySelector("h3").textContent.toLowerCase();
+        const description = card.querySelector("p").textContent.toLowerCase();
+
+        const matchesCategory =
+            activeFilter === "all" || category === activeFilter;
+
+        const matchesSearch =
+            name.includes(searchText) || description.includes(searchText);
+
+        card.style.display =
+            matchesCategory && matchesSearch ? "" : "none";
+    });
+}
+
+filters.forEach(button => {
+    button.addEventListener("click", () => {
+        filters.forEach(item => item.classList.remove("selected"));
+        button.classList.add("selected");
+
+        activeFilter = button.dataset.filter;
+        updateCollections();
+    });
+});
+
+search.addEventListener("input", updateCollections);
+</script>
 
 </body>
 </html>
